@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/LivelihoodMonitoring.Application/LivelihoodMonitoring.Application.csproj" />
+    <Project Path="src/LivelihoodMonitoring.Domain/LivelihoodMonitoring.Domain.csproj" />
+    <Project Path="src/LivelihoodMonitoring.Infrastructure/LivelihoodMonitoring.Infrastructure.csproj" />
+    <Project Path="src/LivelihoodMonitoring.WebApi/LivelihoodMonitoring.WebApi.csproj" />
+  </Folder>
+</Solution>
