@@ -1,0 +1,26 @@
+# .NET build output
+bin/
+obj/
+*.obj
+
+# Native build output
+*.o
+
+# Node.js dependencies and build output
+node_modules/
+dist/
+
+# IDE and editor files
+.vs/
+.idea/
+*.user
+*.suo
+
+# Logs and test output
+*.log
+coverage/
+TestResults/
+
+# Operating system files
+.DS_Store
+Thumbs.db
