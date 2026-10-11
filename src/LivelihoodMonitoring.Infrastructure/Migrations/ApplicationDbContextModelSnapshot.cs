@@ -28,7 +28,18 @@ namespace LivelihoodMonitoring.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<int>("BeneficiaryType")
+                        .HasColumnType("integer");
+
                     b.Property<string>("BranchCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("BusinessName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Cluster")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -46,7 +57,15 @@ namespace LivelihoodMonitoring.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("PartnerOrganization")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Region")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -74,7 +93,115 @@ namespace LivelihoodMonitoring.Infrastructure.Migrations
 
                     b.HasIndex("BranchCode");
 
+                    b.HasIndex("Cluster");
+
+                    b.HasIndex("PartnerOrganization");
+
+                    b.HasIndex("Region");
+
+                    b.HasIndex("UserId");
+
                     b.ToTable("BeneficiaryProfiles");
+                });
+
+            modelBuilder.Entity("LivelihoodMonitoring.Domain.Entities.BeneficiaryTraining", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BeneficiaryProfileId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CompletedDateUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("SyncedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("TrainerOrInstitution")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("TrainingTitle")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("VocationalSector")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BeneficiaryProfileId");
+
+                    b.ToTable("BeneficiaryTrainings");
+                });
+
+            modelBuilder.Entity("LivelihoodMonitoring.Domain.Entities.BusinessGoal", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BeneficiaryProfileId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("CurrentAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsAchieved")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("SyncedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("TargetAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.Property<DateTime?>("TargetDateUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BeneficiaryProfileId");
+
+                    b.ToTable("BusinessGoals");
                 });
 
             modelBuilder.Entity("LivelihoodMonitoring.Domain.Entities.BusinessTransaction", b =>
@@ -143,6 +270,9 @@ namespace LivelihoodMonitoring.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
+                    b.Property<DateTime?>("NextFollowUpDateUtc")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Recommendations")
                         .IsRequired()
                         .HasColumnType("text");
@@ -151,10 +281,17 @@ namespace LivelihoodMonitoring.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("StaffName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("SyncedAtUtc")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime?>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("VisitDateUtc")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("VisitFindings")
@@ -166,6 +303,126 @@ namespace LivelihoodMonitoring.Infrastructure.Migrations
                     b.HasIndex("BeneficiaryProfileId");
 
                     b.ToTable("CaseNotes");
+                });
+
+            modelBuilder.Entity("LivelihoodMonitoring.Domain.Entities.LearningResource", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Category")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Sector")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("SyncedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Category");
+
+                    b.HasIndex("Language");
+
+                    b.ToTable("LearningResources");
+                });
+
+            modelBuilder.Entity("LivelihoodMonitoring.Domain.Entities.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("BranchCode")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("SyncedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("LivelihoodMonitoring.Domain.Entities.BeneficiaryTraining", b =>
+                {
+                    b.HasOne("LivelihoodMonitoring.Domain.Entities.BeneficiaryProfile", "BeneficiaryProfile")
+                        .WithMany("Trainings")
+                        .HasForeignKey("BeneficiaryProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BeneficiaryProfile");
+                });
+
+            modelBuilder.Entity("LivelihoodMonitoring.Domain.Entities.BusinessGoal", b =>
+                {
+                    b.HasOne("LivelihoodMonitoring.Domain.Entities.BeneficiaryProfile", "BeneficiaryProfile")
+                        .WithMany("Goals")
+                        .HasForeignKey("BeneficiaryProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BeneficiaryProfile");
                 });
 
             modelBuilder.Entity("LivelihoodMonitoring.Domain.Entities.BusinessTransaction", b =>
@@ -193,6 +450,10 @@ namespace LivelihoodMonitoring.Infrastructure.Migrations
             modelBuilder.Entity("LivelihoodMonitoring.Domain.Entities.BeneficiaryProfile", b =>
                 {
                     b.Navigation("CaseNotes");
+
+                    b.Navigation("Goals");
+
+                    b.Navigation("Trainings");
 
                     b.Navigation("Transactions");
                 });

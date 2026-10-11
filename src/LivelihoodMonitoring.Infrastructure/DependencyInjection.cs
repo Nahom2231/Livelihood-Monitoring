@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using LivelihoodMonitoring.Application.Common.Interfaces;
 using LivelihoodMonitoring.Infrastructure.Persistence;
+using LivelihoodMonitoring.Infrastructure.Services;
 
 namespace LivelihoodMonitoring.Infrastructure;
 
@@ -17,6 +18,10 @@ public static class DependencyInjection
             options.UseNpgsql(connectionString));
 
         services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
+        services.AddHttpContextAccessor();
+        services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
+        services.AddSingleton<IPasswordHasher, PasswordHasher>();
 
         return services;
     }

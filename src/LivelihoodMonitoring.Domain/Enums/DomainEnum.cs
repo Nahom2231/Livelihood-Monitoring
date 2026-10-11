@@ -9,6 +9,14 @@ public enum UserRole
     Admin
 }
 
+public enum BeneficiaryType
+{
+    Youth,
+    Caregiver,
+    VocationalGraduate,
+    SmallBusinessStarter
+}
+
 public enum TransactionType
 {
     Sale,
@@ -23,4 +31,18 @@ public enum BusinessStatus
     Underperforming,
     AtRisk,
     Dormant
+}
+
+public enum GoalType
+{
+    GoalSetting,
+    SimpleBudget,
+    SavingsTarget
+}
+
+public enum LearningCategory
+{
+    FinancialLiteracy,
+    BusinessManagement,
+    VocationalGuidance
 }
