@@ -5,7 +5,7 @@ using LivelihoodMonitoring.Application.Dashboard.Queries;
 
 namespace LivelihoodMonitoring.WebApi.Controllers;
 
-[Authorize(Roles = "SocialWorker,BranchCoordinator,HeadOfficeMAndE,Admin")]
+[Authorize(Roles = "Beneficiary,SocialWorker,BranchCoordinator,HeadOfficeMAndE,Admin")]
 [ApiController]
 [Route("api/[controller]")]
 public class DashboardController : ControllerBase

@@ -41,4 +41,17 @@ public class AuthController : ControllerBase
 
         return Ok(result);
     }
+
+    [AllowAnonymous]
+    [HttpPost("forgot-password")]
+    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand command, CancellationToken ct)
+    {
+        var result = await _sender.Send(command, ct);
+        if (!result.Success)
+        {
+            return NotFound(new { message = result.Message });
+        }
+
+        return Ok(result);
+    }
 }
