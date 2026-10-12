@@ -302,11 +302,34 @@ export interface BusinessGoalDto {
                     class="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold rounded-lg border border-slate-200 dark:border-slate-700 transition-colors">
                     + 1,000 ETB
                   </button>
-                  <button 
-                    (click)="openCustomDeposit(goal)"
-                    class="px-2.5 py-1 bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 dark:hover:bg-emerald-900 text-emerald-700 dark:text-emerald-300 font-semibold rounded-lg border border-emerald-200 dark:border-emerald-800 transition-colors">
-                    {{ lang.t('plan.depositProgress') }}
-                  </button>
+
+                  @if (activeDepositGoalId() === goal.id) {
+                    <div class="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-800 p-1 rounded-lg border border-emerald-300 dark:border-emerald-700">
+                      <input 
+                        type="number" 
+                        [(ngModel)]="customDepositAmount" 
+                        placeholder="ETB"
+                        class="w-20 px-2 py-0.5 text-xs border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 rounded focus:outline-none focus:ring-1 focus:ring-emerald-500 text-slate-900 dark:text-white"
+                        (keyup.enter)="confirmCustomDeposit(goal)"
+                      />
+                      <button 
+                        (click)="confirmCustomDeposit(goal)" 
+                        class="px-2 py-0.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-[11px] font-semibold transition-colors">
+                        {{ lang.t('common.save') }}
+                      </button>
+                      <button 
+                        (click)="cancelCustomDeposit()" 
+                        class="px-1.5 py-0.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-xs font-bold">
+                        &times;
+                      </button>
+                    </div>
+                  } @else {
+                    <button 
+                      (click)="openCustomDeposit(goal)"
+                      class="px-2.5 py-1 bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 dark:hover:bg-emerald-900 text-emerald-700 dark:text-emerald-300 font-semibold rounded-lg border border-emerald-200 dark:border-emerald-800 transition-colors">
+                      {{ lang.t('plan.depositProgress') }}
+                    </button>
+                  }
                 </div>
 
                 <button 
@@ -447,6 +470,8 @@ export class BusinessPlanningComponent implements OnInit {
   readonly goals = signal<BusinessGoalDto[]>([]);
   readonly showGoalModal = signal(false);
   readonly isSavingGoal = signal(false);
+  readonly activeDepositGoalId = signal<string | null>(null);
+  customDepositAmount: number | null = 500;
 
   newGoalTitle = '';
   newGoalType = 2; // SavingsTarget
@@ -537,12 +562,19 @@ export class BusinessPlanningComponent implements OnInit {
   }
 
   openCustomDeposit(goal: BusinessGoalDto): void {
-    const amountStr = prompt(`Enter deposit amount in ETB toward "${goal.title}":`, '500');
-    if (!amountStr) return;
-    const num = parseFloat(amountStr);
-    if (!isNaN(num) && num > 0) {
-      this.addProgress(goal, num);
+    this.activeDepositGoalId.set(goal.id);
+    this.customDepositAmount = 500;
+  }
+
+  cancelCustomDeposit(): void {
+    this.activeDepositGoalId.set(null);
+  }
+
+  confirmCustomDeposit(goal: BusinessGoalDto): void {
+    if (this.customDepositAmount && this.customDepositAmount > 0) {
+      this.addProgress(goal, this.customDepositAmount);
     }
+    this.activeDepositGoalId.set(null);
   }
 
   deleteGoal(goalId: string): void {
