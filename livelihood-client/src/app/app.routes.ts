@@ -21,6 +21,34 @@ export const routes: Routes = [
     loadComponent: () => import('./features/dashboard/dashboard.component').then(m => m.DashboardComponent)
   },
   {
+    path: 'bookkeeping',
+    canActivate: [authGuard],
+    loadComponent: () => import('./features/bookkeeping/bookkeeping.component').then(m => m.BookkeepingComponent)
+  },
+  {
+    path: 'cases',
+    canActivate: [authGuard],
+    loadComponent: () => import('./features/case-management/case-management.component').then(m => m.CaseManagementComponent)
+  },
+  {
+    path: 'case-management',
+    redirectTo: 'cases'
+  },
+  {
+    path: 'planning',
+    canActivate: [authGuard],
+    loadComponent: () => import('./features/business-planning/business-planning.component').then(m => m.BusinessPlanningComponent)
+  },
+  {
+    path: 'business-planning',
+    redirectTo: 'planning'
+  },
+  {
+    path: 'learning',
+    canActivate: [authGuard],
+    loadComponent: () => import('./features/learning/learning.component').then(m => m.LearningComponent)
+  },
+  {
     path: '**',
     redirectTo: ''
   }

@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 html {
   min-width: 320px;
   scroll-behavior: smooth;
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 body {
@@ -13,11 +19,22 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: #f8fafc;
   color: #0f172a;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+html.dark body {
+  background: #090d16;
+  color: #f1f5f9;
 }
 
 ::selection {
   color: #17352c;
   background: #c9f4a4;
+}
+
+html.dark ::selection {
+  color: #f8fafc;
+  background: #047857;
 }
 
 .hero-surface {
@@ -27,6 +44,15 @@ body {
     radial-gradient(ellipse at 80% 12%, rgb(89 190 210 / 27%), transparent 31%),
     radial-gradient(ellipse at 84% 72%, rgb(174 135 225 / 24%), transparent 34%),
     linear-gradient(125deg, #fff6e5 0%, #eaf9f6 48%, #f0edff 100%);
+}
+
+html.dark .hero-surface {
+  background-color: #0b1320;
+  background-image:
+    radial-gradient(ellipse at 13% 24%, rgb(16 185 129 / 18%), transparent 35%),
+    radial-gradient(ellipse at 80% 12%, rgb(56 189 248 / 15%), transparent 35%),
+    radial-gradient(ellipse at 84% 72%, rgb(168 85 247 / 14%), transparent 35%),
+    linear-gradient(135deg, #090e17 0%, #0d1926 48%, #111827 100%);
 }
 
 .rise-in {
