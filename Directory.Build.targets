@@ -1,0 +1,8 @@
+<Project>
+  <!-- Permanently resolve Windows DLL file locking (MSB3021 / MSB3027) by killing any active WebApi instance before building -->
+  <Target Name="KillWebApiProcessBeforeBuild" BeforeTargets="BeforeBuild" Condition="'$(OS)' == 'Windows_NT'">
+    <Exec Command="taskkill /F /IM LivelihoodMonitoring.WebApi.exe /T >nul 2>&amp;1 || exit 0" 
+          ContinueOnError="true" 
+          IgnoreExitCode="true" />
+  </Target>
+</Project>
