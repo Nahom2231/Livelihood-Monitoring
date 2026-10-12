@@ -330,11 +330,43 @@ public static class DatabaseSeeder
                     },
                     new LearningResource
                     {
+                        Title = "Garaagarummaa Yaa'a Maallaqaa fi Bu'aa (Cash Flow vs Profit)",
+                        Content = "Yaa'i maallaqaa maallaqa guyyaa guyyaan daldala keessan keessa galuu fi bahuudha. Bu'aan ammoo erga baasiin hundi hir'ifamee booda kan hafuudha. Yeroo hunda galii fi baasii guyyaa guyyaan galmeessaa.",
+                        Category = LearningCategory.FinancialLiteracy,
+                        Sector = "All",
+                        Language = "om"
+                    },
+                    new LearningResource
+                    {
+                        Title = "ፍልልይ ዋሕዚ ገንዘብን መኽሰብን (Cash Flow vs Profit)",
+                        Content = "ዋሕዚ ገንዘብ ማለት መዓልታዊ ናብ ንግድኹም ዝኣቱን ዝወጽእን ጥረ ገንዘብ እዩ። መኽሰብ ድማ ድሕሪ ኩሉ ወጻኢታት ምቕናስ ዝተርፍ እዩ። ኩሉ ግዜ መዓልታዊ ኣታውን ወጻእን ብግቡእ መዝግቡ።",
+                        Category = LearningCategory.FinancialLiteracy,
+                        Sector = "All",
+                        Language = "ti"
+                    },
+                    new LearningResource
+                    {
                         Title = "Managing Stock & Preventing Inventory Loss",
                         Content = "1. Always record every batch of goods bought. 2. Track fast-moving vs slow-moving items. 3. Reorder before running out to never lose paying customers.",
                         Category = LearningCategory.BusinessManagement,
                         Sector = "Retail",
                         Language = "en"
+                    },
+                    new LearningResource
+                    {
+                        Title = "To'annoo Meeshaalee fi Qisaasama Ittisuu (Stock Controls)",
+                        Content = "1. Meeshaalee bitaman hunda galmeessaa. 2. Meeshaalee dafanii gurguraman adda baasaa. 3. Meeshaan dhumachuun dura yeroon ajajaa.",
+                        Category = LearningCategory.BusinessManagement,
+                        Sector = "Retail",
+                        Language = "om"
+                    },
+                    new LearningResource
+                    {
+                        Title = "ምምሕዳር ንብረትን ምክልኻል ክሳራን (Stock Controls)",
+                        Content = "1. ዝተዓደገ ኩሉ ሸቐጥ ብግቡእ ምዝጋቡ። 2. ቀልጢፉ ዝሽየጥ ንብረት ፍለዩ። 3. እቲ ኣቑሑት ከይተወድአ ኣቐዲምኩም ኣዘዙ።",
+                        Category = LearningCategory.BusinessManagement,
+                        Sector = "Retail",
+                        Language = "ti"
                     },
                     new LearningResource
                     {
@@ -348,6 +380,46 @@ public static class DatabaseSeeder
 
                 await context.SaveChangesAsync(CancellationToken.None);
                 logger.LogInformation("Database seeded successfully with default users and test livelihoods data.");
+            }
+
+            // Ensure multilingual resources exist for existing databases as well
+            if (!await context.LearningResources.AnyAsync(r => r.Language == "om"))
+            {
+                context.LearningResources.AddRange(
+                    new LearningResource
+                    {
+                        Title = "Garaagarummaa Yaa'a Maallaqaa fi Bu'aa (Cash Flow vs Profit)",
+                        Content = "Yaa'i maallaqaa maallaqa guyyaa guyyaan daldala keessan keessa galuu fi bahuudha. Bu'aan ammoo erga baasiin hundi hir'ifamee booda kan hafuudha. Yeroo hunda galii fi baasii guyyaa guyyaan galmeessaa.",
+                        Category = LearningCategory.FinancialLiteracy,
+                        Sector = "All",
+                        Language = "om"
+                    },
+                    new LearningResource
+                    {
+                        Title = "To'annoo Meeshaalee fi Qisaasama Ittisuu (Stock Controls)",
+                        Content = "1. Meeshaalee bitaman hunda galmeessaa. 2. Meeshaalee dafanii gurguraman adda baasaa. 3. Meeshaan dhumachuun dura yeroon ajajaa.",
+                        Category = LearningCategory.BusinessManagement,
+                        Sector = "Retail",
+                        Language = "om"
+                    },
+                    new LearningResource
+                    {
+                        Title = "ፍልልይ ዋሕዚ ገንዘብን መኽሰብን (Cash Flow vs Profit)",
+                        Content = "ዋሕዚ ገንዘብ ማለት መዓልታዊ ናብ ንግድኹም ዝኣቱን ዝወጽእን ጥረ ገንዘብ እዩ። መኽሰብ ድማ ድሕሪ ኩሉ ወጻኢታት ምቕናስ ዝተርፍ እዩ። ኩሉ ግዜ መዓልታዊ ኣታውን ወጻእን ብግቡእ መዝግቡ።",
+                        Category = LearningCategory.FinancialLiteracy,
+                        Sector = "All",
+                        Language = "ti"
+                    },
+                    new LearningResource
+                    {
+                        Title = "ምምሕዳር ንብረትን ምክልኻል ክሳራን (Stock Controls)",
+                        Content = "1. ዝተዓደገ ኩሉ ሸቐጥ ብግቡእ ምዝጋቡ። 2. ቀልጢፉ ዝሽየጥ ንብረት ፍለዩ። 3. እቲ ኣቑሑት ከይተወድአ ኣቐዲምኩም ኣዘዙ።",
+                        Category = LearningCategory.BusinessManagement,
+                        Sector = "Retail",
+                        Language = "ti"
+                    }
+                );
+                await context.SaveChangesAsync(CancellationToken.None);
             }
         }
         catch (Exception ex)
