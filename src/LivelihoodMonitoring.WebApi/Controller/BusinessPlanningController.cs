@@ -66,6 +66,16 @@ public class BusinessPlanningController : ControllerBase
         return NoContent();
     }
 
+    [HttpGet("goals")]
+    [Authorize(Roles = "Beneficiary,SocialWorker,BranchCoordinator,HeadOfficeMAndE,Admin")]
+    public async Task<ActionResult<List<BusinessGoalDto>>> GetAllGoals(
+        [FromQuery] GoalType? type, 
+        CancellationToken ct)
+    {
+        var result = await _sender.Send(new GetBusinessGoalsByBeneficiaryQuery(null, type), ct);
+        return Ok(result);
+    }
+
     [HttpGet("goals/beneficiary/{beneficiaryProfileId:guid}")]
     [Authorize(Roles = "Beneficiary,SocialWorker,BranchCoordinator,HeadOfficeMAndE,Admin")]
     public async Task<ActionResult<List<BusinessGoalDto>>> GetGoalsByBeneficiary(

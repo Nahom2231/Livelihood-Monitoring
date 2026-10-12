@@ -7,7 +7,7 @@ using LivelihoodMonitoring.Domain.Enums;
 namespace LivelihoodMonitoring.Application.BusinessPlanning.Queries;
 
 public record GetBusinessGoalsByBeneficiaryQuery(
-    Guid BeneficiaryProfileId,
+    Guid? BeneficiaryProfileId = null,
     GoalType? Type = null
 ) : IRequest<List<BusinessGoalDto>>;
 
@@ -24,7 +24,12 @@ public class GetBusinessGoalsByBeneficiaryQueryHandler : IRequestHandler<GetBusi
     {
         var query = _context.BusinessGoals
             .AsNoTracking()
-            .Where(g => g.BeneficiaryProfileId == request.BeneficiaryProfileId && !g.IsDeleted);
+            .Where(g => !g.IsDeleted);
+
+        if (request.BeneficiaryProfileId.HasValue)
+        {
+            query = query.Where(g => g.BeneficiaryProfileId == request.BeneficiaryProfileId.Value);
+        }
 
         if (request.Type.HasValue)
         {

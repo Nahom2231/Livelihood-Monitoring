@@ -39,6 +39,12 @@ public class SyncTransactionsCommandHandler : IRequestHandler<SyncTransactionsCo
             .Select(t => t.ClientSyncId)
             .ToHashSetAsync(cancellationToken);
 
+        // Query existing profile IDs to ensure FK validity
+        var allProfileIds = await _context.BeneficiaryProfiles
+            .Select(b => b.Id)
+            .ToHashSetAsync(cancellationToken);
+        var fallbackProfileId = allProfileIds.FirstOrDefault();
+
         foreach (var item in request.Items)
         {
             if (existingSyncIds.Contains(item.ClientSyncId))
@@ -47,10 +53,25 @@ public class SyncTransactionsCommandHandler : IRequestHandler<SyncTransactionsCo
                 continue;
             }
 
+            var targetProfileId = item.BeneficiaryProfileId;
+            if (!allProfileIds.Contains(targetProfileId))
+            {
+                var profileByUser = await _context.BeneficiaryProfiles
+                    .FirstOrDefaultAsync(b => b.UserId == item.BeneficiaryProfileId.ToString(), cancellationToken);
+                if (profileByUser != null)
+                {
+                    targetProfileId = profileByUser.Id;
+                }
+                else if (fallbackProfileId != Guid.Empty)
+                {
+                    targetProfileId = fallbackProfileId;
+                }
+            }
+
             var transaction = new BusinessTransaction
             {
                 ClientSyncId = item.ClientSyncId,
-                BeneficiaryProfileId = item.BeneficiaryProfileId,
+                BeneficiaryProfileId = targetProfileId,
                 Type = item.Type,
                 Amount = item.Amount,
                 Description = item.Description,

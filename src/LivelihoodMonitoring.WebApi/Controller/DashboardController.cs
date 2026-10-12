@@ -37,4 +37,12 @@ public class DashboardController : ControllerBase
         var result = await _sender.Send(new GetFinancialTrendsQuery(months), ct);
         return Ok(result);
     }
+
+    [HttpGet("public-stats")]
+    [AllowAnonymous]
+    public async Task<ActionResult<DashboardSummaryDto>> GetPublicStats(CancellationToken ct = default)
+    {
+        var result = await _sender.Send(new GetMonitoringDashboardSummaryQuery(), ct);
+        return Ok(result);
+    }
 }

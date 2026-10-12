@@ -33,6 +33,16 @@ public class CaseManagementController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("case-notes")]
+    [Authorize(Roles = "SocialWorker,BranchCoordinator,HeadOfficeMAndE,Admin")]
+    public async Task<ActionResult<List<CaseNoteDto>>> GetAllCaseNotes(
+        [FromQuery] int limit = 50, 
+        CancellationToken ct = default)
+    {
+        var result = await _sender.Send(new GetAllCaseNotesQuery(limit), ct);
+        return Ok(result);
+    }
+
     [HttpGet("case-notes/beneficiary/{beneficiaryProfileId:guid}")]
     [Authorize(Roles = "SocialWorker,BranchCoordinator,HeadOfficeMAndE,Admin")]
     public async Task<ActionResult<List<CaseNoteDto>>> GetCaseNotes(
@@ -55,6 +65,16 @@ public class CaseManagementController : ControllerBase
             return BadRequest(new { message = "Beneficiary not found or recording training failed." });
         }
 
+        return Ok(result);
+    }
+
+    [HttpGet("trainings")]
+    [Authorize(Roles = "Beneficiary,SocialWorker,BranchCoordinator,HeadOfficeMAndE,Admin")]
+    public async Task<ActionResult<List<BeneficiaryTrainingDto>>> GetAllTrainings(
+        [FromQuery] int limit = 50, 
+        CancellationToken ct = default)
+    {
+        var result = await _sender.Send(new GetAllBeneficiaryTrainingsQuery(limit), ct);
         return Ok(result);
     }
 
