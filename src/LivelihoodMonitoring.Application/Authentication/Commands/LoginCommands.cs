@@ -17,7 +17,13 @@ public record RegisterUserCommand(
     string? BranchCode,
     string? BusinessName = null,
     string? LivelihoodSector = null
-) : IRequest<AuthResultDto?>;
+) : IRequest<RegisterResultDto>;
+
+public record RegisterResultDto(
+    bool Success,
+    string Message,
+    AuthResultDto? Auth = null
+);
 
 public record ForgotPasswordCommand(string Username, string? NewPassword = null) : IRequest<ForgotPasswordResultDto>;
 
@@ -113,7 +119,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, AuthResultDto?>
     }
 }
 
-public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, AuthResultDto?>
+public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, RegisterResultDto>
 {
     private readonly IApplicationDbContext _context;
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
@@ -129,24 +135,51 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, A
         _passwordHasher = passwordHasher;
     }
 
-    public async Task<AuthResultDto?> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+    public async Task<RegisterResultDto> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
-        var exists = await _context.Users.AnyAsync(u => u.Username.ToLower() == request.Username.ToLower(), cancellationToken);
-        if (exists)
+        if (string.IsNullOrWhiteSpace(request.Username))
         {
-            return null;
+            return new RegisterResultDto(false, "Username is required.");
+        }
+
+        if (string.IsNullOrWhiteSpace(request.Password) || request.Password.Length < 6)
+        {
+            return new RegisterResultDto(false, "Password must be at least 6 characters long.");
+        }
+
+        var cleanUsername = request.Username.Trim();
+        var usernameExists = await _context.Users.AnyAsync(
+            u => u.Username.ToLower() == cleanUsername.ToLower() && !u.IsDeleted, 
+            cancellationToken);
+
+        if (usernameExists)
+        {
+            return new RegisterResultDto(false, $"Username '{cleanUsername}' is already taken. Please choose another username or sign in.");
+        }
+
+        var cleanPhone = request.PhoneNumber?.Trim() ?? string.Empty;
+        if (!string.IsNullOrWhiteSpace(cleanPhone))
+        {
+            var phoneExists = await _context.Users.AnyAsync(
+                u => u.PhoneNumber == cleanPhone && !u.IsDeleted, 
+                cancellationToken);
+
+            if (phoneExists)
+            {
+                return new RegisterResultDto(false, $"An account with phone number '{cleanPhone}' is already registered. Please sign in or use another number.");
+            }
         }
 
         var (hash, salt) = _passwordHasher.HashPassword(request.Password);
         var user = new User
         {
-            Username = request.Username,
+            Username = cleanUsername,
             PasswordHash = hash,
             PasswordSalt = salt,
-            FullName = request.FullName,
-            PhoneNumber = request.PhoneNumber,
+            FullName = !string.IsNullOrWhiteSpace(request.FullName) ? request.FullName.Trim() : cleanUsername,
+            PhoneNumber = cleanPhone,
             Role = request.Role,
-            BranchCode = request.BranchCode
+            BranchCode = !string.IsNullOrWhiteSpace(request.BranchCode) ? request.BranchCode.Trim() : "BR-AA-01"
         };
 
         _context.Users.Add(user);
@@ -161,8 +194,8 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, A
                 FullName = user.FullName,
                 PhoneNumber = user.PhoneNumber,
                 BranchCode = user.BranchCode ?? "BR-AA-01",
-                BusinessName = !string.IsNullOrWhiteSpace(request.BusinessName) ? request.BusinessName : $"{user.FullName}'s Enterprise",
-                LivelihoodSector = !string.IsNullOrWhiteSpace(request.LivelihoodSector) ? request.LivelihoodSector : "Poultry",
+                BusinessName = !string.IsNullOrWhiteSpace(request.BusinessName) ? request.BusinessName.Trim() : $"{user.FullName}'s Enterprise",
+                LivelihoodSector = !string.IsNullOrWhiteSpace(request.LivelihoodSector) ? request.LivelihoodSector.Trim() : "Poultry",
                 Region = user.BranchCode switch
                 {
                     "BR-AA-01" => "Addis Ababa",
@@ -187,7 +220,7 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, A
             user.Role,
             user.BranchCode);
 
-        return new AuthResultDto(
+        var auth = new AuthResultDto(
             token,
             user.Id.ToString(),
             user.Username,
@@ -196,6 +229,8 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, A
             user.BranchCode,
             beneficiaryProfileId
         );
+
+        return new RegisterResultDto(true, "Registration successful.", auth);
     }
 }
 

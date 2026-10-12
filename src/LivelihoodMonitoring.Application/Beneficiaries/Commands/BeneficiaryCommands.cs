@@ -38,9 +38,18 @@ public record UpdateBeneficiaryStatusCommand(
     BusinessStatus Status
 ) : IRequest<bool>;
 
+public record UpdateBeneficiaryProfileCommand(
+    Guid BeneficiaryProfileId,
+    string? FullName,
+    string? PhoneNumber,
+    string? BusinessName,
+    string? LivelihoodSector
+) : IRequest<bool>;
+
 public class BeneficiaryCommandHandler : 
     IRequestHandler<CreateBeneficiaryProfileCommand, BeneficiaryProfileCreatedDto>,
-    IRequestHandler<UpdateBeneficiaryStatusCommand, bool>
+    IRequestHandler<UpdateBeneficiaryStatusCommand, bool>,
+    IRequestHandler<UpdateBeneficiaryProfileCommand, bool>
 {
     private readonly IApplicationDbContext _context;
     private readonly IPasswordHasher _passwordHasher;
@@ -126,6 +135,52 @@ public class BeneficiaryCommandHandler :
 
         profile.Status = request.Status;
         profile.UpdatedAtUtc = DateTime.UtcNow;
+        await _context.SaveChangesAsync(cancellationToken);
+        return true;
+    }
+
+    public async Task<bool> Handle(UpdateBeneficiaryProfileCommand request, CancellationToken cancellationToken)
+    {
+        var profile = await _context.BeneficiaryProfiles
+            .FirstOrDefaultAsync(b => b.Id == request.BeneficiaryProfileId && !b.IsDeleted, cancellationToken);
+
+        if (profile == null)
+        {
+            return false;
+        }
+
+        if (!string.IsNullOrWhiteSpace(request.FullName))
+        {
+            profile.FullName = request.FullName.Trim();
+        }
+
+        if (!string.IsNullOrWhiteSpace(request.PhoneNumber))
+        {
+            profile.PhoneNumber = request.PhoneNumber.Trim();
+        }
+
+        if (!string.IsNullOrWhiteSpace(request.BusinessName))
+        {
+            profile.BusinessName = request.BusinessName.Trim();
+        }
+
+        if (!string.IsNullOrWhiteSpace(request.LivelihoodSector))
+        {
+            profile.LivelihoodSector = request.LivelihoodSector.Trim();
+        }
+
+        profile.UpdatedAtUtc = DateTime.UtcNow;
+
+        if (Guid.TryParse(profile.UserId, out var userGuid))
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userGuid, cancellationToken);
+            if (user != null)
+            {
+                if (!string.IsNullOrWhiteSpace(request.FullName)) user.FullName = request.FullName.Trim();
+                if (!string.IsNullOrWhiteSpace(request.PhoneNumber)) user.PhoneNumber = request.PhoneNumber.Trim();
+            }
+        }
+
         await _context.SaveChangesAsync(cancellationToken);
         return true;
     }

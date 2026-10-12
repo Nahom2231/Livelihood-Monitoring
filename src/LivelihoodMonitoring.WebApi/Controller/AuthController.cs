@@ -34,12 +34,12 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Register([FromBody] RegisterUserCommand command, CancellationToken ct)
     {
         var result = await _sender.Send(command, ct);
-        if (result == null)
+        if (!result.Success)
         {
-            return BadRequest(new { message = "Username already exists or registration failed." });
+            return BadRequest(new { message = result.Message });
         }
 
-        return Ok(result);
+        return Ok(result.Auth);
     }
 
     [AllowAnonymous]

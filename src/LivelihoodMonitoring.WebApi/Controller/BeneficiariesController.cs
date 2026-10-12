@@ -84,4 +84,20 @@ public class BeneficiariesController : ControllerBase
 
         return Ok(result);
     }
+
+    public record UpdateProfileRequest(string? FullName, string? PhoneNumber, string? BusinessName, string? LivelihoodSector);
+
+    [HttpPut("{id:guid}/profile")]
+    [Authorize(Roles = "Beneficiary,SocialWorker,BranchCoordinator,HeadOfficeMAndE,Admin")]
+    public async Task<IActionResult> UpdateProfile(Guid id, [FromBody] UpdateProfileRequest request, CancellationToken ct)
+    {
+        var command = new UpdateBeneficiaryProfileCommand(id, request.FullName, request.PhoneNumber, request.BusinessName, request.LivelihoodSector);
+        var success = await _sender.Send(command, ct);
+        if (!success)
+        {
+            return NotFound(new { message = $"Beneficiary profile with ID {id} was not found." });
+        }
+
+        return NoContent();
+    }
 }
