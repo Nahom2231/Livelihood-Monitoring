@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LivelihoodMonitoring.Application\LivelihoodMonitoring.Application.csproj" />
+    <ProjectReference Include="..\LivelihoodMonitoring.Domain\LivelihoodMonitoring.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

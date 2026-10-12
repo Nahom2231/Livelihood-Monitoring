@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LivelihoodMonitoring.Domain\LivelihoodMonitoring.Domain.csproj" />
     <ProjectReference Include="..\LivelihoodMonitoring.Application\LivelihoodMonitoring.Application.csproj" />
     <ProjectReference Include="..\LivelihoodMonitoring.Infrastructure\LivelihoodMonitoring.Infrastructure.csproj" />
   </ItemGroup>
