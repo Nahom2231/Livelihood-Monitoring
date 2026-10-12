@@ -37,7 +37,9 @@ export class AuthService {
   private readonly currentUserSignal = signal<AuthResponse | null>(this.getStoredUser());
 
   readonly currentUser = this.currentUserSignal.asReadonly();
-  readonly isAuthenticated = computed(() => !!this.currentUserSignal());
+  readonly isAuthenticated = computed(() => {
+    return !!this.currentUserSignal() && !this.isTokenExpired();
+  });
   readonly isStaff = computed(() => {
     const role = this.currentUserSignal()?.role;
     return role === 'SocialWorker' || role === 'BranchCoordinator' || role === 'HeadOfficeMAndE' || role === 'Admin';
@@ -72,12 +74,34 @@ export class AuthService {
     return localStorage.getItem(this.tokenKey);
   }
 
+  isTokenExpired(): boolean {
+    const token = this.getToken();
+    if (!token) return true;
+    try {
+      const parts = token.split('.');
+      if (parts.length !== 3) return true;
+      const payload = JSON.parse(atob(parts[1]));
+      if (!payload.exp) return false;
+      return Date.now() >= payload.exp * 1000;
+    } catch {
+      return true;
+    }
+  }
+
   private getStoredUser(): AuthResponse | null {
     const stored = localStorage.getItem(this.userKey);
     if (!stored) return null;
     try {
-      return JSON.parse(stored) as AuthResponse;
+      const user = JSON.parse(stored) as AuthResponse;
+      if (this.isTokenExpired()) {
+        localStorage.removeItem(this.tokenKey);
+        localStorage.removeItem(this.userKey);
+        return null;
+      }
+      return user;
     } catch {
+      localStorage.removeItem(this.tokenKey);
+      localStorage.removeItem(this.userKey);
       return null;
     }
   }

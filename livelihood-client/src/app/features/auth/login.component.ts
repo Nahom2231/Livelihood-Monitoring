@@ -296,6 +296,8 @@ export class LoginComponent implements OnInit {
         if (params['user']) {
           this.loginForm.patchValue({ username: params['user'], password: '' });
         }
+      } else if (params['sessionExpired'] === 'true') {
+        this.errorMessage.set('Your session has expired or requires renewal. Please sign in to continue.');
       }
     });
   }
