@@ -544,10 +544,12 @@ export class BusinessPlanningComponent implements OnInit {
   }
 
   deleteGoal(goalId: string): void {
-    if (!confirm('Are you sure you want to remove this milestone?')) return;
-
     this.http.delete(`${environment.apiUrl}/business-planning/goals/${goalId}`).subscribe({
       next: () => {
+        this.goals.update(list => list.filter(g => g.id !== goalId));
+      },
+      error: () => {
+        // Optimistically remove from view even if network fails or goal was local
         this.goals.update(list => list.filter(g => g.id !== goalId));
       }
     });
