@@ -9,6 +9,8 @@ namespace LivelihoodMonitoring.WebApi.Controllers;
 
 [ApiController]
 [Route("api/learning-resources")]
+[Route("api/learning/resources")]
+[Route("api/learning")]
 public class LearningResourcesController : ControllerBase
 {
     private readonly ISender _sender;
