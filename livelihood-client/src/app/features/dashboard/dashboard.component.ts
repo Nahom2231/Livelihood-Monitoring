@@ -27,7 +27,7 @@ import { LanguageService } from '../../core/services/language.service';
             <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
               {{ lang.t('nav.dashboard') }}
             </h1>
-            <p class="text-xs text-slate-500 dark:text-slate-400">Live livelihoods performance, seed money utilization, and risk tracking</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400">{{ lang.t('dash.livePerfSub') }}</p>
           </div>
 
           <!-- Comprehensive Filters & Export Controls -->
@@ -143,7 +143,7 @@ import { LanguageService } from '../../core/services/language.service';
             <div class="bg-rose-50/40 dark:bg-rose-950/20 p-5 rounded-xl border border-rose-200 dark:border-rose-900/60 shadow-sm transition-colors duration-200">
               <span class="text-xs font-semibold text-rose-700 dark:text-rose-400">{{ lang.t('dash.atRiskFlagged') }}</span>
               <div class="text-xl font-black text-rose-600 dark:text-rose-400 mt-2">{{ data.atRiskBeneficiaries }}</div>
-              <div class="text-[11px] text-rose-600 dark:text-rose-400 font-medium mt-1">Requires supervisor follow-up</div>
+              <div class="text-[11px] text-rose-600 dark:text-rose-400 font-medium mt-1">{{ lang.t('dash.reqSupervisor') }}</div>
             </div>
           </div>
 
@@ -153,10 +153,10 @@ import { LanguageService } from '../../core/services/language.service';
               <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
                 <div>
                   <h2 class="text-sm font-bold text-slate-900 dark:text-white">{{ lang.t('dash.criticalFollowUps') }}</h2>
-                  <p class="text-xs text-slate-500 dark:text-slate-400">Enterprises incurring deficits, dormancy, or zero transaction reporting</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400">{{ lang.t('dash.criticalSub') }}</p>
                 </div>
                 <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-rose-100 dark:bg-rose-950/80 text-rose-800 dark:text-rose-300">
-                  {{ data.criticalFollowUps.length }} Flagged
+                  {{ data.criticalFollowUps.length }} {{ lang.t('dash.flagged') }}
                 </span>
               </div>
 
@@ -204,7 +204,7 @@ import { LanguageService } from '../../core/services/language.service';
                     } @empty {
                       <tr>
                         <td colspan="6" class="px-6 py-8 text-center text-slate-400 dark:text-slate-500">
-                          No at-risk beneficiaries detected in this scope.
+                          {{ lang.t('dash.noAtRisk') }}
                         </td>
                       </tr>
                     }
@@ -262,10 +262,10 @@ import { LanguageService } from '../../core/services/language.service';
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
               <div>
                 <h2 class="text-sm font-bold text-slate-900 dark:text-white">{{ lang.t('dash.financialTrajectory') }}</h2>
-                <p class="text-xs text-slate-500 dark:text-slate-400">Aggregated gross sales, operating costs, and net profit realized across branches</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400">{{ lang.t('dash.trajectorySub') }}</p>
               </div>
               <span class="text-xs font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-1 rounded-full border border-emerald-100 dark:border-emerald-800">
-                Monthly Performance Trends
+                {{ lang.t('dash.monthlyTrends') }}
               </span>
             </div>
 
@@ -297,7 +297,7 @@ import { LanguageService } from '../../core/services/language.service';
                 </div>
               } @empty {
                 <div class="col-span-3 text-center py-6 text-xs text-slate-400 dark:text-slate-500">
-                  No transaction activity logged in the 6-month window for this filter scope.
+                  {{ lang.t('dash.noTrendActivity') }}
                 </div>
               }
             </div>
@@ -390,7 +390,7 @@ import { LanguageService } from '../../core/services/language.service';
               <div class="text-2xl font-black mt-2" [ngClass]="ben.dailyProfit >= 0 ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'">
                 {{ ben.dailyProfit | number:'1.2-2' }} ETB
               </div>
-              <div class="text-[11px] text-slate-400 dark:text-slate-500 mt-1">Daily income minus expenses</div>
+              <div class="text-[11px] text-slate-400 dark:text-slate-500 mt-1">{{ lang.t('dash.dailyProfitHint') }}</div>
             </div>
 
             <div class="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-200">
@@ -398,7 +398,7 @@ import { LanguageService } from '../../core/services/language.service';
               <div class="text-2xl font-black mt-2" [ngClass]="ben.weeklyProfit >= 0 ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'">
                 {{ ben.weeklyProfit | number:'1.2-2' }} ETB
               </div>
-              <div class="text-[11px] text-slate-400 dark:text-slate-500 mt-1">Rolling 7-day net performance</div>
+              <div class="text-[11px] text-slate-400 dark:text-slate-500 mt-1">{{ lang.t('dash.weeklyProfitHint') }}</div>
             </div>
 
             <div class="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-200">
@@ -406,7 +406,7 @@ import { LanguageService } from '../../core/services/language.service';
               <div class="text-2xl font-black mt-2" [ngClass]="ben.monthlyProfit >= 0 ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'">
                 {{ ben.monthlyProfit | number:'1.2-2' }} ETB
               </div>
-              <div class="text-[11px] text-slate-400 dark:text-slate-500 mt-1">Current calendar month</div>
+              <div class="text-[11px] text-slate-400 dark:text-slate-500 mt-1">{{ lang.t('dash.monthlyProfitHint') }}</div>
             </div>
 
             <div class="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-200">
@@ -437,14 +437,14 @@ import { LanguageService } from '../../core/services/language.service';
                 </div>
               </div>
               <div class="flex justify-between text-xs text-slate-500 dark:text-slate-400 font-medium">
-                <span>Net Profit Generated: {{ ben.breakEven.cumulativeNetProfit | number:'1.2-2' }} ETB</span>
-                <span>Seed Target: {{ ben.breakEven.seedCapitalAmount | number:'1.2-2' }} ETB</span>
+                <span>{{ lang.t('dash.netProfitGen') }} {{ ben.breakEven.cumulativeNetProfit | number:'1.2-2' }} ETB</span>
+                <span>{{ lang.t('dash.seedTarget') }} {{ ben.breakEven.seedCapitalAmount | number:'1.2-2' }} ETB</span>
               </div>
             </div>
 
             @if (!ben.breakEven.isBreakEvenAchieved) {
               <p class="text-xs text-slate-600 dark:text-slate-300">
-                You need <strong class="text-slate-900 dark:text-white">{{ ben.breakEven.remainingToBreakEven | number:'1.2-2' }} ETB</strong> more in net profit to fully recover your initial seed investment.
+                {{ lang.t('dash.needMoreNetProfit1') }} <strong class="text-slate-900 dark:text-white">{{ ben.breakEven.remainingToBreakEven | number:'1.2-2' }} ETB</strong> {{ lang.t('dash.needMoreNetProfit2') }}
               </p>
             }
           </div>
@@ -496,34 +496,34 @@ import { LanguageService } from '../../core/services/language.service';
           <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-lg w-full p-6 shadow-xl space-y-4 border border-slate-200 dark:border-slate-800 transition-colors">
             <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
               <div>
-                <h3 class="text-sm font-bold text-slate-900 dark:text-white">Record Field Follow-Up Visit</h3>
-                <p class="text-xs text-slate-500 dark:text-slate-400">Beneficiary: {{ activeFollowUpModal()?.fullName }} ({{ activeFollowUpModal()?.branchCode }})</p>
+                <h3 class="text-sm font-bold text-slate-900 dark:text-white">{{ lang.t('dash.recFollowUpModal') }}</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400"><span class="font-medium">{{ lang.t('auth.beneficiary') }}:</span> {{ activeFollowUpModal()?.fullName }} ({{ activeFollowUpModal()?.branchCode }})</p>
               </div>
               <button (click)="closeCaseNoteModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg">&times;</button>
             </div>
 
             <div class="space-y-3 text-xs">
               <div>
-                <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Field Findings & Observations</label>
+                <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">{{ lang.t('dash.fieldFindings') }}</label>
                 <textarea 
                   [(ngModel)]="caseNoteFindings" 
                   rows="3" 
-                  placeholder="Record business operational observations, stock checks, or obstacles..."
+                  [placeholder]="lang.t('dash.fieldFindingsPlaceholder')"
                   class="w-full border border-slate-300 dark:border-slate-700 rounded-lg p-2.5 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
               </div>
 
               <div>
-                <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Staff Recommendations</label>
+                <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">{{ lang.t('case.recommendations') }}</label>
                 <textarea 
                   [(ngModel)]="caseNoteRecommendations" 
                   rows="2" 
-                  placeholder="Action items, financial advice, or coaching provided..."
+                  [placeholder]="lang.t('dash.staffRecPlaceholder')"
                   class="w-full border border-slate-300 dark:border-slate-700 rounded-lg p-2.5 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
               </div>
 
               <div class="flex items-center gap-2 pt-1">
                 <input type="checkbox" [(ngModel)]="caseNoteFollowUpRequired" id="fu_cb" class="rounded text-emerald-600 focus:ring-emerald-500">
-                <label for="fu_cb" class="font-medium text-slate-700 dark:text-slate-300">Flag for ongoing follow-up visit</label>
+                <label for="fu_cb" class="font-medium text-slate-700 dark:text-slate-300">{{ lang.t('dash.flagFollowUp') }}</label>
               </div>
             </div>
 
@@ -537,7 +537,7 @@ import { LanguageService } from '../../core/services/language.service';
                 (click)="saveCaseNote()" 
                 [disabled]="isSavingCaseNote() || !caseNoteFindings" 
                 class="px-4 py-2 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 rounded-lg shadow-sm">
-                {{ isSavingCaseNote() ? 'Saving...' : 'Save Case Note' }}
+                {{ isSavingCaseNote() ? lang.t('common.loading') : lang.t('dash.saveCaseNote') }}
               </button>
             </div>
           </div>
@@ -550,8 +550,8 @@ import { LanguageService } from '../../core/services/language.service';
           <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-lg w-full p-6 shadow-xl space-y-4 border border-slate-200 dark:border-slate-800 transition-colors">
             <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
               <div>
-                <h3 class="text-base font-bold text-slate-900 dark:text-white">Enterprise Profile & Grant Records</h3>
-                <p class="text-xs text-slate-500 dark:text-slate-400">Official livelihood program registration credentials</p>
+                <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ lang.t('dash.profileGrantTitle') }}</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400">{{ lang.t('dash.profileGrantSub') }}</p>
               </div>
               <button (click)="closeProfileModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg">&times;</button>
             </div>
@@ -559,16 +559,16 @@ import { LanguageService } from '../../core/services/language.service';
             <div class="space-y-4 text-xs">
               <!-- Seed Grant Summary Card -->
               <div class="p-3.5 bg-emerald-50 dark:bg-emerald-950/60 rounded-xl border border-emerald-100 dark:border-emerald-800 space-y-1">
-                <span class="text-[11px] font-bold text-emerald-800 dark:text-emerald-300 uppercase tracking-wider">Initial Seed Capital Grant</span>
+                <span class="text-[11px] font-bold text-emerald-800 dark:text-emerald-300 uppercase tracking-wider">{{ lang.t('dash.initialSeedGrant') }}</span>
                 <div class="text-xl font-black text-emerald-900 dark:text-emerald-200">
                   {{ (beneficiarySummary()?.breakEven?.seedCapitalAmount || 15000) | number:'1.2-2' }} ETB
                 </div>
-                <p class="text-[11px] text-emerald-700 dark:text-emerald-400">Disbursed under the ABC Company Economic Inclusion Programme.</p>
+                <p class="text-[11px] text-emerald-700 dark:text-emerald-400">{{ lang.t('dash.disbursedUnder') }}</p>
               </div>
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Entrepreneur Name</label>
+                  <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">{{ lang.t('dash.entrepreneurName') }}</label>
                   <input 
                     type="text" 
                     [(ngModel)]="editFullName" 
@@ -578,7 +578,7 @@ import { LanguageService } from '../../core/services/language.service';
                 </div>
 
                 <div>
-                  <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Registered Phone</label>
+                  <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">{{ lang.t('dash.registeredPhone') }}</label>
                   <input 
                     type="text" 
                     [(ngModel)]="editPhone" 
@@ -590,25 +590,25 @@ import { LanguageService } from '../../core/services/language.service';
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Business Name *</label>
+                  <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">{{ lang.t('dash.businessNameField') }}</label>
                   <input 
                     type="text" 
                     [(ngModel)]="editBusinessName" 
-                    placeholder="e.g. Almaz Bekele Tailoring"
+                    [placeholder]="lang.t('dash.businessNamePlaceholder')"
                     class="w-full border border-slate-300 dark:border-slate-700 rounded-lg p-2.5 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                   />
                 </div>
 
                 <div>
-                  <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Livelihood Sector *</label>
+                  <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">{{ lang.t('dash.livelihoodSectorField') }}</label>
                   <select 
                     [(ngModel)]="editSector" 
                     class="w-full border border-slate-300 dark:border-slate-700 rounded-lg p-2.5 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                    <option value="Poultry">Poultry & Livestock</option>
-                    <option value="Retail">Retail & Shopkeeping</option>
-                    <option value="Tailoring">Tailoring & Garment</option>
-                    <option value="Agriculture">Vegetable & Crop Farming</option>
-                    <option value="Catering">Food & Tea Stall</option>
+                    <option value="Poultry">{{ lang.t('auth.sectorPoultry') }}</option>
+                    <option value="Retail">{{ lang.t('auth.sectorRetail') }}</option>
+                    <option value="Tailoring">{{ lang.t('auth.sectorTailoring') }}</option>
+                    <option value="Agriculture">{{ lang.t('auth.sectorProduce') }}</option>
+                    <option value="Catering">{{ lang.t('auth.sectorFood') }}</option>
                   </select>
                 </div>
               </div>
@@ -624,7 +624,7 @@ import { LanguageService } from '../../core/services/language.service';
                 (click)="saveProfileUpdates()" 
                 [disabled]="isSavingProfile() || !editBusinessName" 
                 class="px-4 py-2 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 rounded-lg shadow-sm">
-                {{ isSavingProfile() ? 'Saving...' : 'Update Business Profile' }}
+                {{ isSavingProfile() ? lang.t('common.loading') : lang.t('dash.updateProfileBtn') }}
               </button>
             </div>
           </div>

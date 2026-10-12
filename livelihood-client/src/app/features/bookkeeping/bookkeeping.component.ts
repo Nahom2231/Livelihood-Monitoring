@@ -153,7 +153,7 @@ import { LanguageService } from '../../core/services/language.service';
               <input 
                 type="text" 
                 formControlName="description" 
-                placeholder="e.g. Sold 5 Chickens, Feed Purchase, Bank Deposit" 
+                [placeholder]="lang.t('tx.descPlaceholder')" 
                 class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               />
             </div>
@@ -173,7 +173,7 @@ import { LanguageService } from '../../core/services/language.service';
         <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <h3 class="text-sm font-bold text-slate-900 dark:text-white">{{ lang.t('tx.recentHistory') }}</h3>
-            <p class="text-xs text-slate-400 dark:text-slate-500">{{ filteredTransactions().length }} showing of {{ transactions().length }} total</p>
+            <p class="text-xs text-slate-400 dark:text-slate-500">{{ filteredTransactions().length }} {{ lang.t('tx.showingOf') }} {{ transactions().length }} {{ lang.t('tx.total') }}</p>
           </div>
 
           <!-- Filter Chips -->
@@ -253,7 +253,7 @@ import { LanguageService } from '../../core/services/language.service';
                 </div>
                 <span class="text-[10px] font-semibold uppercase tracking-wider"
                   [ngClass]="tx.synced ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'">
-                  {{ tx.synced ? 'Synced' : 'Pending' }}
+                  {{ tx.synced ? lang.t('tx.synced') : lang.t('tx.pending') }}
                 </span>
               </div>
             </div>

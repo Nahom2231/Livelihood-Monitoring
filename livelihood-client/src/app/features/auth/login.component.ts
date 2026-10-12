@@ -17,7 +17,7 @@ import { LanguageService } from '../../core/services/language.service';
         <a 
           routerLink="/" 
           class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white rounded-lg transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 absolute top-6 left-6"
-          title="Back to Landing Page">
+          [title]="lang.t('common.backToHome')">
           <svg viewBox="0 0 20 20" fill="currentColor" class="size-3.5">
             <path fill-rule="evenodd" d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z" clip-rule="evenodd" />
           </svg>
@@ -75,7 +75,7 @@ import { LanguageService } from '../../core/services/language.service';
                 <input 
                   type="text" 
                   formControlName="username" 
-                  placeholder="e.g. ben_abebe or 0911234567"
+                  [placeholder]="lang.t('auth.usernameOrPhonePlaceholder')"
                   class="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
                 />
               </div>
@@ -83,7 +83,7 @@ import { LanguageService } from '../../core/services/language.service';
 
             <div>
               <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
-                New Password <span class="text-slate-400 font-normal">(Optional - defaults to Password123!)</span>
+                {{ lang.t('auth.newPasswordLabel') }}
               </label>
               <div class="relative">
                 <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -94,7 +94,7 @@ import { LanguageService } from '../../core/services/language.service';
                 <input 
                   type="password" 
                   formControlName="newPassword" 
-                  placeholder="Enter new password"
+                  [placeholder]="lang.t('auth.newPasswordPlaceholder')"
                   class="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
                 />
               </div>
@@ -137,7 +137,7 @@ import { LanguageService } from '../../core/services/language.service';
                 <input 
                   type="text" 
                   formControlName="username" 
-                  placeholder="e.g. headoffice_mne or ben_abebe"
+                  [placeholder]="lang.t('auth.usernamePlaceholder')"
                   class="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
                 />
               </div>
@@ -217,7 +217,7 @@ import { LanguageService } from '../../core/services/language.service';
               type="button" 
               (click)="showDemoDrawer.set(!showDemoDrawer())"
               class="text-[11px] font-semibold text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 cursor-pointer inline-flex items-center gap-1">
-              <span>{{ showDemoDrawer() ? 'Hide test accounts' : 'Quick fill test credentials' }}</span>
+              <span>{{ showDemoDrawer() ? lang.t('auth.hideTestAccounts') : lang.t('auth.quickFillAccounts') }}</span>
               <span class="text-[9px]">{{ showDemoDrawer() ? '▲' : '▼' }}</span>
             </button>
 
@@ -227,28 +227,28 @@ import { LanguageService } from '../../core/services/language.service';
                   type="button" 
                   (click)="fillPreset('headoffice_mne')"
                   class="p-2 text-xs border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 font-medium text-slate-700 dark:text-slate-300 transition-colors">
-                  <span class="block font-bold text-slate-900 dark:text-white">M&E Lead</span>
+                  <span class="block font-bold text-slate-900 dark:text-white">{{ lang.t('auth.roleMeLead') }}</span>
                   <span class="text-[10px] text-slate-500 dark:text-slate-400">headoffice_mne</span>
                 </button>
                 <button 
                   type="button" 
                   (click)="fillPreset('social_worker_1')"
                   class="p-2 text-xs border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 font-medium text-slate-700 dark:text-slate-300 transition-colors">
-                  <span class="block font-bold text-slate-900 dark:text-white">Social Worker</span>
+                  <span class="block font-bold text-slate-900 dark:text-white">{{ lang.t('auth.roleSocialWorker') }}</span>
                   <span class="text-[10px] text-slate-500 dark:text-slate-400">social_worker_1</span>
                 </button>
                 <button 
                   type="button" 
                   (click)="fillPreset('ben_abebe')"
                   class="p-2 text-xs border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 font-medium text-slate-700 dark:text-slate-300 transition-colors">
-                  <span class="block font-bold text-slate-900 dark:text-white">Tailoring</span>
+                  <span class="block font-bold text-slate-900 dark:text-white">{{ lang.t('auth.roleTailoring') }}</span>
                   <span class="text-[10px] text-slate-500 dark:text-slate-400">ben_abebe</span>
                 </button>
                 <button 
                   type="button" 
                   (click)="fillPreset('ben_fatima')"
                   class="p-2 text-xs border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 font-medium text-slate-700 dark:text-slate-300 transition-colors">
-                  <span class="block font-bold text-slate-900 dark:text-white">Poultry</span>
+                  <span class="block font-bold text-slate-900 dark:text-white">{{ lang.t('auth.rolePoultry') }}</span>
                   <span class="text-[10px] text-slate-500 dark:text-slate-400">ben_fatima</span>
                 </button>
               </div>

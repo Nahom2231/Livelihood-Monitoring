@@ -30,9 +30,9 @@ export interface BusinessGoalDto {
         <div>
           <div class="flex items-center gap-2">
             <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 uppercase tracking-wider">
-              Strategic Growth
+              {{ lang.t('plan.strategicGrowth') }}
             </span>
-            <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Break-Even & Savings Milestone Planning</span>
+            <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">{{ lang.t('plan.subtitle') }}</span>
           </div>
           <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
             {{ lang.t('plan.title') }}
@@ -59,7 +59,7 @@ export interface BusinessGoalDto {
               <h2 class="text-base font-bold text-slate-900 dark:text-white">{{ lang.t('plan.breakEvenCalc') }}</h2>
               <span class="text-[11px] font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-100 dark:border-emerald-800">Monthly</span>
             </div>
-            <p class="text-xs text-slate-400 dark:text-slate-500 mt-0.5">Determine the unit quantity of sales required to cover all fixed costs</p>
+            <p class="text-xs text-slate-400 dark:text-slate-500 mt-0.5">{{ lang.t('plan.breakEvenDesc') }}</p>
           </div>
 
           <div class="space-y-4">
@@ -70,7 +70,7 @@ export interface BusinessGoalDto {
                 [(ngModel)]="fixedCosts" 
                 class="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white rounded-lg text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               />
-              <span class="text-[11px] text-slate-400 dark:text-slate-500">Rent, electricity, stall fee, equipment hire</span>
+              <span class="text-[11px] text-slate-400 dark:text-slate-500">{{ lang.t('plan.fixedCostsHint') }}</span>
             </div>
 
             <div>
@@ -89,7 +89,7 @@ export interface BusinessGoalDto {
                 [(ngModel)]="costPerUnit" 
                 class="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white rounded-lg text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               />
-              <span class="text-[11px] text-slate-400 dark:text-slate-500">Raw materials, wholesale cost per item, packaging</span>
+              <span class="text-[11px] text-slate-400 dark:text-slate-500">{{ lang.t('plan.variableCostsHint') }}</span>
             </div>
           </div>
 
@@ -110,9 +110,9 @@ export interface BusinessGoalDto {
           <div class="border-b border-slate-100 dark:border-slate-800 pb-3">
             <div class="flex items-center justify-between">
               <h2 class="text-base font-bold text-slate-900 dark:text-white">{{ lang.t('plan.grossMargin') }}</h2>
-              <span class="text-[11px] font-semibold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/60 px-2 py-0.5 rounded border border-indigo-100 dark:border-indigo-800">Per Item</span>
+              <span class="text-[11px] font-semibold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/60 px-2 py-0.5 rounded border border-indigo-100 dark:border-indigo-800">{{ lang.t('plan.perItem') }}</span>
             </div>
-            <p class="text-xs text-slate-400 dark:text-slate-500 mt-0.5">Contribution margin realized on every sale</p>
+            <p class="text-xs text-slate-400 dark:text-slate-500 mt-0.5">{{ lang.t('plan.contributionMarginDesc') }}</p>
           </div>
 
           <div class="grid grid-cols-2 gap-4">
@@ -121,7 +121,7 @@ export interface BusinessGoalDto {
               <span class="text-2xl font-black text-slate-900 dark:text-white mt-1 block">
                 {{ (salePricePerUnit() - costPerUnit()) | number:'1.2-2' }} ETB
               </span>
-              <span class="text-[11px] text-slate-400 dark:text-slate-500">Profit retained per piece</span>
+              <span class="text-[11px] text-slate-400 dark:text-slate-500">{{ lang.t('plan.profitRetainedDesc') }}</span>
             </div>
 
             <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-100 dark:border-slate-800">
@@ -129,14 +129,14 @@ export interface BusinessGoalDto {
               <span class="text-2xl font-black text-indigo-700 dark:text-indigo-400 mt-1 block">
                 {{ marginPercentage() | number:'1.1-1' }}%
               </span>
-              <span class="text-[11px] text-slate-400 dark:text-slate-500">Of sales revenue</span>
+              <span class="text-[11px] text-slate-400 dark:text-slate-500">{{ lang.t('plan.ofSalesRevenue') }}</span>
             </div>
           </div>
 
           <div class="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-100 dark:border-slate-800 space-y-2 text-xs">
-            <div class="font-bold text-slate-800 dark:text-slate-200">Business Recommendation:</div>
+            <div class="font-bold text-slate-800 dark:text-slate-200">{{ lang.t('plan.recommendationTitle') }}</div>
             <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
-              If your variable cost is above 60% of your retail price, investigate collective bulk purchasing with other local entrepreneurs in your branch to negotiate lower supplier prices.
+              {{ lang.t('plan.recommendationDesc') }}
             </p>
           </div>
         </div>
@@ -148,9 +148,9 @@ export interface BusinessGoalDto {
           <div>
             <div class="flex items-center gap-2">
               <span class="text-xs font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/60 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-800 uppercase tracking-wider">
-                Monthly Budgeting Tool
+                {{ lang.t('plan.budgetTitle') }}
               </span>
-              <span class="text-xs text-slate-400 dark:text-slate-500">Cash Flow Allocation</span>
+              <span class="text-xs text-slate-400 dark:text-slate-500">{{ lang.t('plan.cashFlowAllocation') }}</span>
             </div>
             <h2 class="text-base font-bold text-slate-900 dark:text-white mt-1">{{ lang.t('plan.budgetTool') }}</h2>
             <p class="text-xs text-slate-500 dark:text-slate-400">{{ lang.t('plan.budgetToolDesc') }}</p>
@@ -172,7 +172,7 @@ export interface BusinessGoalDto {
               [(ngModel)]="budgetProjectedIncome" 
               class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-xs font-semibold text-emerald-700 dark:text-emerald-400 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
             />
-            <span class="text-[11px] text-slate-400 dark:text-slate-500 block">Expected sales income</span>
+            <span class="text-[11px] text-slate-400 dark:text-slate-500 block">{{ lang.t('plan.expectedSales') }}</span>
           </div>
 
           <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-2">
@@ -182,7 +182,7 @@ export interface BusinessGoalDto {
               [(ngModel)]="budgetRawMaterials" 
               class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-xs font-semibold text-amber-700 dark:text-amber-400 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
             />
-            <span class="text-[11px] text-slate-400 dark:text-slate-500 block">Raw materials & merchandise</span>
+            <span class="text-[11px] text-slate-400 dark:text-slate-500 block">{{ lang.t('plan.rawMaterials') }}</span>
           </div>
 
           <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-2">
@@ -192,7 +192,7 @@ export interface BusinessGoalDto {
               [(ngModel)]="budgetOperatingExpenses" 
               class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-xs font-semibold text-rose-700 dark:text-rose-400 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
             />
-            <span class="text-[11px] text-slate-400 dark:text-slate-500 block">Rent, utilities, licenses, transport</span>
+            <span class="text-[11px] text-slate-400 dark:text-slate-500 block">{{ lang.t('plan.operatingExpensesHint') }}</span>
           </div>
 
           <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-2">
@@ -202,7 +202,7 @@ export interface BusinessGoalDto {
               [(ngModel)]="budgetSavingsContribution" 
               class="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-xs font-semibold text-indigo-700 dark:text-indigo-400 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
             />
-            <span class="text-[11px] text-slate-400 dark:text-slate-500 block">Emergency fund & growth</span>
+            <span class="text-[11px] text-slate-400 dark:text-slate-500 block">{{ lang.t('plan.emergencyFundHint') }}</span>
           </div>
         </div>
 
@@ -226,7 +226,7 @@ export interface BusinessGoalDto {
           </div>
 
           <div class="text-xs text-right text-slate-500 dark:text-slate-400 sm:max-w-xs">
-            A healthy livelihood model allocates at least 10–15% of monthly revenue into a bank savings account to insulate against seasonal shocks.
+            {{ lang.t('plan.budgetAdvice') }}
           </div>
         </div>
       </div>
@@ -236,10 +236,10 @@ export interface BusinessGoalDto {
         <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
             <h2 class="text-base font-bold text-slate-900 dark:text-white">{{ lang.t('plan.activeMilestones') }}</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400">Track real progress toward emergency reserves, capital reinvestment, or new equipment</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400">{{ lang.t('plan.milestonesSubtitle') }}</p>
           </div>
           <span class="text-xs font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-100 dark:border-emerald-800">
-            {{ goals().length }} Milestones Logged
+            {{ goals().length }} {{ lang.t('plan.milestonesLogged') }}
           </span>
         </div>
 
@@ -259,7 +259,7 @@ export interface BusinessGoalDto {
                     </span>
                     @if (goal.isAchieved) {
                       <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-600 text-white">
-                        ✓ Milestone Reached!
+                        {{ lang.t('plan.milestoneReached') }}
                       </span>
                     }
                   </div>
@@ -272,7 +272,7 @@ export interface BusinessGoalDto {
                     {{ goal.currentAmount | number:'1.2-2' }} / {{ goal.targetAmount | number:'1.2-2' }} ETB
                   </div>
                   <span class="text-xs font-semibold text-emerald-600 dark:text-emerald-400">
-                    {{ goal.progressPercentage | number:'1.0-1' }}% Completed
+                    {{ goal.progressPercentage | number:'1.0-1' }}% {{ lang.t('plan.completed') }}
                   </span>
                 </div>
               </div>
@@ -317,8 +317,8 @@ export interface BusinessGoalDto {
           } @empty {
             <div class="p-12 text-center text-xs text-slate-400 dark:text-slate-500">
               <span class="text-3xl block mb-2">🎯</span>
-              No active business goals found in the live database.
-              <p class="mt-1 text-slate-500 dark:text-slate-400">Click "+ Set New Business Goal" or "Save as Active Budget Milestone" above to track real milestones.</p>
+              {{ lang.t('plan.noGoals') }}
+              <p class="mt-1 text-slate-500 dark:text-slate-400">{{ lang.t('plan.noGoalsSub') }}</p>
             </div>
           }
         </div>
@@ -335,29 +335,29 @@ export interface BusinessGoalDto {
 
             <div class="space-y-3 text-xs">
               <div>
-                <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Goal / Milestone Title *</label>
+                <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">{{ lang.t('plan.goalTitleLabel') }}</label>
                 <input 
                   type="text" 
                   [(ngModel)]="newGoalTitle" 
-                  placeholder="e.g. Purchase Second Sewing Machine" 
+                  [placeholder]="lang.t('plan.goalTitlePlaceholder')" 
                   class="w-full border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white rounded-lg p-2.5 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 />
               </div>
 
               <div>
-                <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Goal Category *</label>
+                <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">{{ lang.t('plan.goalCategoryLabel') }}</label>
                 <select 
                   [(ngModel)]="newGoalType" 
                   class="w-full border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white rounded-lg p-2.5 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                  <option [value]="0">Simple Budget Target</option>
-                  <option [value]="1">Livelihood Growth Goal</option>
-                  <option [value]="2">Emergency Savings Reserve</option>
+                  <option [value]="0">{{ lang.t('plan.goalCatBudget') }}</option>
+                  <option [value]="1">{{ lang.t('plan.goalCatGrowth') }}</option>
+                  <option [value]="2">{{ lang.t('plan.goalCatEmergency') }}</option>
                 </select>
               </div>
 
               <div class="grid grid-cols-2 gap-3">
                 <div>
-                  <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Target Amount (ETB) *</label>
+                  <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">{{ lang.t('plan.targetAmountLabel') }}</label>
                   <input 
                     type="number" 
                     [(ngModel)]="newGoalTargetAmount" 
@@ -367,7 +367,7 @@ export interface BusinessGoalDto {
                 </div>
 
                 <div>
-                  <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Current Saved (ETB)</label>
+                  <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">{{ lang.t('plan.currentSavedLabel') }}</label>
                   <input 
                     type="number" 
                     [(ngModel)]="newGoalCurrentAmount" 
@@ -378,11 +378,11 @@ export interface BusinessGoalDto {
               </div>
 
               <div>
-                <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Description / Notes</label>
+                <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">{{ lang.t('plan.goalNotesLabel') }}</label>
                 <textarea 
                   rows="2" 
                   [(ngModel)]="newGoalDescription" 
-                  placeholder="Why is this milestone important for your enterprise..." 
+                  [placeholder]="lang.t('plan.goalNotesPlaceholder')" 
                   class="w-full border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white rounded-lg p-2.5 focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
               </div>
             </div>
@@ -397,7 +397,7 @@ export interface BusinessGoalDto {
                 (click)="saveGoal()" 
                 [disabled]="isSavingGoal() || !newGoalTitle || !newGoalTargetAmount" 
                 class="px-4 py-2 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 rounded-lg shadow-sm">
-                {{ isSavingGoal() ? 'Saving...' : 'Create Milestone' }}
+                {{ isSavingGoal() ? lang.t('common.loading') : lang.t('plan.createMilestoneBtn') }}
               </button>
             </div>
           </div>

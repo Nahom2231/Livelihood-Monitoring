@@ -90,7 +90,7 @@ export interface LearningItem {
               ? 'bg-emerald-600 text-white shadow-sm' 
               : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'"
             class="px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors">
-            {{ cat === 'All' ? lang.t('learn.allCategories') : cat }}
+            {{ getCategoryName(cat) }}
           </button>
         }
       </div>
@@ -109,11 +109,11 @@ export interface LearningItem {
               <div class="space-y-3">
                 <div class="flex items-center justify-between text-xs">
                   <span class="px-2.5 py-0.5 rounded-full font-bold bg-emerald-50 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
-                    {{ m.category }}
+                    {{ getCategoryName(m.category) }}
                   </span>
                   <div class="flex items-center gap-2 text-slate-400 dark:text-slate-500 font-medium">
                     <span class="uppercase text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-1.5 py-0.5 rounded font-mono">{{ m.language }}</span>
-                    <span>{{ m.duration || '3 min read' }}</span>
+                    <span>{{ m.duration || ('3 ' + lang.t('learn.estTime')) }}</span>
                   </div>
                 </div>
 
@@ -174,6 +174,14 @@ export class LearningComponent implements OnInit {
 
   setCategory(cat: string): void {
     this.selectedCategory.set(cat);
+  }
+
+  getCategoryName(cat: string): string {
+    if (cat === 'All') return this.lang.t('learn.allCategories');
+    if (cat === 'FinancialLiteracy') return this.lang.t('learn.catFinancial');
+    if (cat === 'BusinessManagement') return this.lang.t('learn.catBusiness');
+    if (cat === 'VocationalGuidance') return this.lang.t('learn.catVocational');
+    return cat;
   }
 
   setLanguage(langCode: string): void {

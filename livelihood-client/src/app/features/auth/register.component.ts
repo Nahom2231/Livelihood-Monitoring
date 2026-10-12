@@ -17,7 +17,7 @@ import { LanguageService } from '../../core/services/language.service';
         <a 
           routerLink="/" 
           class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white rounded-lg transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 absolute top-6 left-6"
-          title="Back to Landing Page">
+          [title]="lang.t('common.backToHome')">
           <svg viewBox="0 0 20 20" fill="currentColor" class="size-3.5">
             <path fill-rule="evenodd" d="M17 10a.75.75 0 0 1-.75.75H5.612l4.158 3.96a.75.75 0 1 1-1.04 1.08l-5.5-5.25a.75.75 0 0 1 0-1.08l5.5-5.25a.75.75 0 1 1 1.04 1.08L5.612 9.25H16.25A.75.75 0 0 1 17 10Z" clip-rule="evenodd" />
           </svg>
@@ -97,11 +97,11 @@ import { LanguageService } from '../../core/services/language.service';
               <input 
                 type="text" 
                 formControlName="fullName" 
-                placeholder="e.g. Abebe Bikila"
+                [placeholder]="lang.t('auth.fullNamePlaceholder')"
                 class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
               />
               @if (registerForm.get('fullName')?.touched && registerForm.get('fullName')?.invalid) {
-                <span class="text-[11px] text-rose-600 dark:text-rose-400 mt-1 block">Full name is required</span>
+                <span class="text-[11px] text-rose-600 dark:text-rose-400 mt-1 block">{{ lang.t('auth.fullNameRequired') }}</span>
               }
             </div>
 
@@ -110,11 +110,11 @@ import { LanguageService } from '../../core/services/language.service';
               <input 
                 type="text" 
                 formControlName="username" 
-                placeholder="e.g. ben_abebe"
+                [placeholder]="lang.t('auth.usernamePlaceholder')"
                 class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
               />
               @if (registerForm.get('username')?.touched && registerForm.get('username')?.invalid) {
-                <span class="text-[11px] text-rose-600 dark:text-rose-400 mt-1 block">Username is required</span>
+                <span class="text-[11px] text-rose-600 dark:text-rose-400 mt-1 block">{{ lang.t('auth.usernameRequired') }}</span>
               }
             </div>
           </div>
@@ -126,11 +126,11 @@ import { LanguageService } from '../../core/services/language.service';
               <input 
                 type="text" 
                 formControlName="phoneNumber" 
-                placeholder="e.g. 0911234567"
+                [placeholder]="lang.t('auth.phonePlaceholder')"
                 class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
               />
               @if (registerForm.get('phoneNumber')?.touched && registerForm.get('phoneNumber')?.invalid) {
-                <span class="text-[11px] text-rose-600 dark:text-rose-400 mt-1 block">Valid phone number is required</span>
+                <span class="text-[11px] text-rose-600 dark:text-rose-400 mt-1 block">{{ lang.t('auth.phoneRequired') }}</span>
               }
             </div>
 
@@ -160,7 +160,7 @@ import { LanguageService } from '../../core/services/language.service';
                   <input 
                     type="text" 
                     formControlName="businessName" 
-                    placeholder="e.g. Abebe's Tailoring"
+                    [placeholder]="lang.t('auth.businessPlaceholder')"
                     class="w-full px-3.5 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                   />
                 </div>
@@ -169,12 +169,12 @@ import { LanguageService } from '../../core/services/language.service';
                   <select 
                     formControlName="livelihoodSector"
                     class="w-full px-3.5 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                    <option value="Poultry">Poultry Husbandry</option>
-                    <option value="Livestock">Livestock Fattening</option>
-                    <option value="Tailoring">Tailoring & Apparel</option>
-                    <option value="Retail">Retail Mini-Market</option>
-                    <option value="Fresh Produce">Fresh Produce & Markets</option>
-                    <option value="Food Service">Food Service / Eatery</option>
+                    <option value="Poultry">{{ lang.t('auth.sectorPoultry') }}</option>
+                    <option value="Livestock">{{ lang.t('auth.sectorLivestock') }}</option>
+                    <option value="Tailoring">{{ lang.t('auth.sectorTailoring') }}</option>
+                    <option value="Retail">{{ lang.t('auth.sectorRetail') }}</option>
+                    <option value="Fresh Produce">{{ lang.t('auth.sectorProduce') }}</option>
+                    <option value="Food Service">{{ lang.t('auth.sectorFood') }}</option>
                   </select>
                 </div>
               </div>
@@ -189,7 +189,7 @@ import { LanguageService } from '../../core/services/language.service';
                 <input 
                   [type]="showPassword() ? 'text' : 'password'" 
                   formControlName="password" 
-                  placeholder="At least 6 characters"
+                  [placeholder]="lang.t('auth.passwordMinPlaceholder')"
                   class="w-full pr-10 px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
                 />
                 <button 
@@ -200,7 +200,7 @@ import { LanguageService } from '../../core/services/language.service';
                 </button>
               </div>
               @if (registerForm.get('password')?.touched && registerForm.get('password')?.invalid) {
-                <span class="text-[11px] text-rose-600 dark:text-rose-400 mt-1 block">Password must be at least 6 characters</span>
+                <span class="text-[11px] text-rose-600 dark:text-rose-400 mt-1 block">{{ lang.t('auth.passwordLengthRequired') }}</span>
               }
             </div>
 
@@ -209,11 +209,11 @@ import { LanguageService } from '../../core/services/language.service';
               <input 
                 [type]="showPassword() ? 'text' : 'password'" 
                 formControlName="confirmPassword" 
-                placeholder="Re-enter password"
+                [placeholder]="lang.t('auth.passwordConfirmPlaceholder')"
                 class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
               />
               @if (registerForm.get('confirmPassword')?.touched && passwordMismatch()) {
-                <span class="text-[11px] text-rose-600 dark:text-rose-400 mt-1 block">Passwords do not match</span>
+                <span class="text-[11px] text-rose-600 dark:text-rose-400 mt-1 block">{{ lang.t('auth.passwordsDoNotMatch') }}</span>
               }
             </div>
           </div>

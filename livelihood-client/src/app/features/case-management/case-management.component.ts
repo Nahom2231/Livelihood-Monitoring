@@ -48,9 +48,9 @@ interface TrainingItem {
         <div>
           <div class="flex items-center gap-2">
             <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 uppercase tracking-wider">
-              Field Operations
+              {{ lang.t('case.fieldOps') }}
             </span>
-            <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">M&E Onsite Monitoring</span>
+            <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">{{ lang.t('case.onsiteMonitoring') }}</span>
           </div>
           <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
             {{ lang.t('case.title') }}
@@ -99,7 +99,7 @@ interface TrainingItem {
               </div>
 
               <div>
-                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Visit Date *</label>
+                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">{{ lang.t('case.visitDateLabel') }}</label>
                 <input 
                   type="date" 
                   formControlName="visitDateUtc" 
@@ -113,7 +113,7 @@ interface TrainingItem {
               <textarea 
                 rows="3" 
                 formControlName="visitFindings" 
-                placeholder="Details on inventory storage, record accuracy, business operational status, customer footfall..."
+                [placeholder]="lang.t('case.visitFindingsPlaceholder')"
                 class="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white rounded-lg text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
               </textarea>
             </div>
@@ -123,7 +123,7 @@ interface TrainingItem {
               <textarea 
                 rows="2" 
                 formControlName="recommendations" 
-                placeholder="Action items: reducing high expenses, pricing revision, attending refresher training, savings allocation..."
+                [placeholder]="lang.t('case.recommendationsPlaceholder')"
                 class="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white rounded-lg text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
               </textarea>
             </div>
@@ -137,7 +137,7 @@ interface TrainingItem {
               <div class="flex items-center gap-2">
                 <button 
                   type="button" 
-                  (click)="showForm.set(false)"
+                  (click)="showForm.set(false)" 
                   class="px-4 py-2 border border-slate-300 dark:border-slate-700 text-xs font-semibold rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">
                   {{ lang.t('common.cancel') }}
                 </button>
@@ -145,7 +145,7 @@ interface TrainingItem {
                   type="submit" 
                   [disabled]="noteForm.invalid || isSubmitting()"
                   class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white text-xs font-semibold rounded-lg shadow-sm">
-                  {{ isSubmitting() ? 'Saving...' : lang.t('case.saveVisit') }}
+                  {{ isSubmitting() ? lang.t('common.loading') : lang.t('case.saveVisit') }}
                 </button>
               </div>
             </div>
@@ -176,42 +176,42 @@ interface TrainingItem {
               </div>
 
               <div>
-                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Training Title *</label>
+                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">{{ lang.t('case.trainingTitleLabel') }}</label>
                 <input 
                   type="text" 
                   formControlName="trainingTitle" 
-                  placeholder="e.g. Poultry Biosecurity & Feed Formulation"
+                  [placeholder]="lang.t('case.trainingTitlePlaceholder')"
                   class="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white rounded-lg text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 />
               </div>
 
               <div>
-                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Vocational Sector *</label>
+                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">{{ lang.t('case.vocationalSectorLabel') }}</label>
                 <input 
                   type="text" 
                   formControlName="vocationalSector" 
-                  placeholder="e.g. Agriculture / Poultry / Tailoring"
+                  [placeholder]="lang.t('case.vocationalSectorPlaceholder')"
                   class="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white rounded-lg text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 />
               </div>
 
               <div>
-                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Trainer or Institution *</label>
+                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">{{ lang.t('case.trainerLabel') }}</label>
                 <input 
                   type="text" 
                   formControlName="trainerOrInstitution" 
-                  placeholder="e.g. ABC National Vocational Center"
+                  [placeholder]="lang.t('case.trainerPlaceholder')"
                   class="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white rounded-lg text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 />
               </div>
             </div>
 
             <div>
-              <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Training Notes & Competency Status</label>
+              <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">{{ lang.t('case.trainingNotesLabel') }}</label>
               <textarea 
                 rows="2" 
                 formControlName="notes" 
-                placeholder="Competencies achieved, tool kits received, exam results..."
+                [placeholder]="lang.t('case.trainingNotesPlaceholder')"
                 class="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white rounded-lg text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none">
               </textarea>
             </div>
@@ -219,15 +219,15 @@ interface TrainingItem {
             <div class="flex justify-end gap-2 pt-1">
               <button 
                 type="button" 
-                (click)="showTrainingForm.set(false)"
+                (click)="showTrainingForm.set(false)" 
                 class="px-4 py-2 border border-slate-300 dark:border-slate-700 text-xs font-semibold rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">
                 {{ lang.t('common.cancel') }}
               </button>
               <button 
                 type="submit" 
-                [disabled]="trainingForm.invalid || isSubmitting()"
+                [disabled]="trainingForm.invalid || isSubmitting()" 
                 class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white text-xs font-semibold rounded-lg shadow-sm">
-                {{ isSubmitting() ? 'Saving...' : 'Record Training' }}
+                {{ isSubmitting() ? lang.t('common.loading') : lang.t('case.recordTrainingBtn') }}
               </button>
             </div>
           </form>
@@ -256,12 +256,12 @@ interface TrainingItem {
         </div>
 
         <div class="flex items-center gap-2 text-xs">
-          <label class="font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">Filter by Beneficiary:</label>
+          <label class="font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">{{ lang.t('case.filterByBeneficiary') }}</label>
           <select 
             [(ngModel)]="filterBeneficiaryId" 
             (ngModelChange)="onFilterChange()"
             class="border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-            <option value="">All Beneficiaries</option>
+            <option value="">{{ lang.t('case.allBeneficiaries') }}</option>
             @for (b of beneficiaries(); track b.id) {
               <option [value]="b.id">{{ b.fullName }} ({{ b.branchCode }})</option>
             }
@@ -273,8 +273,8 @@ interface TrainingItem {
       @if (activeTab() === 'notes') {
         <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden transition-colors">
           <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
-            <h2 class="text-sm font-bold text-slate-900 dark:text-white">Field Supervisor Visit Log</h2>
-            <span class="text-xs text-slate-400 dark:text-slate-500 font-mono">{{ notes().length }} logged records</span>
+            <h2 class="text-sm font-bold text-slate-900 dark:text-white">{{ lang.t('case.supervisorLog') }}</h2>
+            <span class="text-xs text-slate-400 dark:text-slate-500 font-mono">{{ notes().length }} {{ lang.t('case.loggedRecords') }}</span>
           </div>
 
           <div class="divide-y divide-slate-100 dark:divide-slate-800">
@@ -288,30 +288,30 @@ interface TrainingItem {
                     <div>
                       <h3 class="text-xs font-bold text-slate-900 dark:text-white">{{ n.beneficiaryName }}</h3>
                       <span class="text-[11px] text-slate-400 dark:text-slate-500">
-                        {{ n.branchCode }} • Visited by {{ n.staffName }} • {{ n.visitDate | date:'mediumDate' }}
+                        {{ n.branchCode }} • {{ lang.t('case.visitedBy') }} {{ n.staffName }} • {{ n.visitDate | date:'mediumDate' }}
                       </span>
                     </div>
                   </div>
 
                   @if (n.followUpRequired) {
                     <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300">
-                      Action Required
+                      {{ lang.t('case.actionRequired') }}
                     </span>
                   } @else {
                     <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">
-                      Stable
+                      {{ lang.t('case.stable') }}
                     </span>
                   }
                 </div>
 
                 <div class="text-xs text-slate-600 dark:text-slate-300 space-y-1 bg-slate-50 dark:bg-slate-800/60 p-3.5 rounded-lg border border-slate-100 dark:border-slate-800">
-                  <p><strong class="text-slate-800 dark:text-white">Findings:</strong> {{ n.findings }}</p>
-                  <p><strong class="text-emerald-700 dark:text-emerald-400">Staff Advice:</strong> {{ n.recommendations }}</p>
+                  <p><strong class="text-slate-800 dark:text-white">{{ lang.t('case.findingsPrefix') }}</strong> {{ n.findings }}</p>
+                  <p><strong class="text-emerald-700 dark:text-emerald-400">{{ lang.t('case.advicePrefix') }}</strong> {{ n.recommendations }}</p>
                 </div>
               </div>
             } @empty {
               <div class="p-12 text-center text-xs text-slate-400 dark:text-slate-500">
-                No field visits logged for the selected scope.
+                {{ lang.t('case.noNotes') }}
               </div>
             }
           </div>
@@ -320,8 +320,8 @@ interface TrainingItem {
         <!-- Trainings Feed -->
         <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden transition-colors">
           <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
-            <h2 class="text-sm font-bold text-slate-900 dark:text-white">Vocational & Business Skills Training Records</h2>
-            <span class="text-xs text-slate-400 dark:text-slate-500 font-mono">{{ trainings().length }} completions</span>
+            <h2 class="text-sm font-bold text-slate-900 dark:text-white">{{ lang.t('case.trainingRecords') }}</h2>
+            <span class="text-xs text-slate-400 dark:text-slate-500 font-mono">{{ trainings().length }} {{ lang.t('case.completions') }}</span>
           </div>
 
           <div class="divide-y divide-slate-100 dark:divide-slate-800">
@@ -342,7 +342,7 @@ interface TrainingItem {
               </div>
             } @empty {
               <div class="p-12 text-center text-xs text-slate-400 dark:text-slate-500">
-                No training certificates or completions recorded.
+                {{ lang.t('case.noTrainings') }}
               </div>
             }
           </div>
