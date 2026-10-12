@@ -87,6 +87,15 @@ export interface BeneficiaryFinancialSummary {
   monthlyCashFlow: CashFlowPoint[];
 }
 
+export interface MonthlyFinancialMetric {
+  monthLabel: string;
+  year: number;
+  month: number;
+  totalSales: number;
+  totalExpenses: number;
+  netProfit: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -94,16 +103,27 @@ export class DashboardService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = environment.apiUrl;
 
-  getSummary(branchCode?: string, region?: string): Observable<DashboardSummary> {
+  getSummary(branchCode?: string, region?: string, cluster?: string, partnerOrganization?: string): Observable<DashboardSummary> {
     let params = new HttpParams();
     if (branchCode) params = params.set('branchCode', branchCode);
     if (region) params = params.set('region', region);
+    if (cluster) params = params.set('cluster', cluster);
+    if (partnerOrganization) params = params.set('partnerOrganization', partnerOrganization);
 
     return this.http.get<DashboardSummary>(`${this.baseUrl}/dashboard/summary`, { params });
   }
 
+  getFinancialTrends(months: number = 6): Observable<MonthlyFinancialMetric[]> {
+    const params = new HttpParams().set('months', months.toString());
+    return this.http.get<MonthlyFinancialMetric[]>(`${this.baseUrl}/dashboard/trends`, { params });
+  }
+
   getBeneficiaryFinancialSummary(id: string): Observable<BeneficiaryFinancialSummary> {
     return this.http.get<BeneficiaryFinancialSummary>(`${this.baseUrl}/beneficiaries/${id}/financial-summary`);
+  }
+
+  updateBeneficiaryProfile(id: string, data: { fullName?: string; phoneNumber?: string; businessName?: string; livelihoodSector?: string }): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/beneficiaries/${id}/profile`, data);
   }
 
   logCaseNote(command: {
@@ -124,6 +144,17 @@ export class DashboardService {
     if (region) params = params.set('region', region);
 
     return this.http.get(`${this.baseUrl}/reports/export/beneficiaries-csv`, {
+      params,
+      responseType: 'blob'
+    });
+  }
+
+  exportTransactionsCsv(beneficiaryProfileId?: string, branchCode?: string): Observable<Blob> {
+    let params = new HttpParams();
+    if (beneficiaryProfileId) params = params.set('beneficiaryProfileId', beneficiaryProfileId);
+    if (branchCode) params = params.set('branchCode', branchCode);
+
+    return this.http.get(`${this.baseUrl}/reports/export/transactions-csv`, {
       params,
       responseType: 'blob'
     });
