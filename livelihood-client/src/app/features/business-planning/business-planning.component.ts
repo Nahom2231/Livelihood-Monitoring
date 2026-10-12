@@ -2,6 +2,8 @@ import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../core/services/auth.service';
 import { LanguageService } from '../../core/services/language.service';
@@ -544,15 +546,15 @@ export class BusinessPlanningComponent implements OnInit {
   }
 
   deleteGoal(goalId: string): void {
-    this.http.delete(`${environment.apiUrl}/business-planning/goals/${goalId}`).subscribe({
-      next: () => {
-        this.goals.update(list => list.filter(g => g.id !== goalId));
-      },
-      error: () => {
-        // Optimistically remove from view even if network fails or goal was local
-        this.goals.update(list => list.filter(g => g.id !== goalId));
-      }
-    });
+    // Immediately remove goal from UI for responsive feedback
+    this.goals.update(list => list.filter(g => g.id !== goalId));
+
+    this.http.delete(`${environment.apiUrl}/business-planning/goals/${goalId}`).pipe(
+      catchError((err) => {
+        // Silently handle if offline or if backend is unreachable
+        return of(null);
+      })
+    ).subscribe();
   }
 
   private resetModal(): void {
